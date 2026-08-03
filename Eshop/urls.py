@@ -36,10 +36,15 @@ def send_otp_sms_api(request):
     result = send_otp_sms(mobile, otp, gateway)
     return JsonResponse(result)
 
+from django.views.static import serve
+from django.urls import re_path
+
 urlpatterns = [
     path('send-otp-sms/', send_otp_sms_api),
     path('admin/verify-payment/<int:order_id>/', admin_verify_payment),
     path('admin/mark-delivered/<int:order_id>/', admin_mark_delivered),
     path('admin/', admin.site.urls),
-    path('' , include('store.urls'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('' , include('store.urls')),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
+
