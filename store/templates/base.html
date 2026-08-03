@@ -2,106 +2,573 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Google Fonts: Inter & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-  <title>E-commerce Website</title>
+  <!-- FontAwesome 6.4.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap 4.6.2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+  <title>NexShop | Modern E-Commerce Platform</title>
 
   <style>
-    nav{
-      background-color: green;
+    :root {
+      --brand-primary: #10b981;
+      --brand-primary-dark: #059669;
+      --brand-dark: #0f172a;
+      --brand-navy: #1e293b;
+      --brand-accent: #6366f1;
+      --brand-bg: #f8fafc;
+      --font-main: 'Inter', sans-serif;
     }
-    .one-edge-shadow {
-              box-shadow: 0 8px 2px -5px rgb(246, 245, 245);
-}
-.display-8{
-  font-weight: 200;
-  font-size: 30px;
-  font-colour: $teal-200;
-}
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--brand-bg);
+      color: #334155;
+      min-height: 100vh;
+    }
+
+    /* Top Announcement Bar */
+    .top-announcement {
+      background-color: #0b1329;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .top-announcement a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .top-announcement a:hover {
+      color: #34d399;
+    }
+
+    .support-pill {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    /* Main Navigation Header */
+    .navbar-nexshop {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 0.9rem 1.5rem;
+    }
+
+    .brand-logo-nexshop {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: #ffffff !important;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      text-decoration: none !important;
+    }
+
+    .brand-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      margin-right: 10px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .brand-tag {
+      font-size: 0.7rem;
+      background: rgba(99, 102, 241, 0.2);
+      color: #818cf8;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+
+    .search-box-nexshop {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .search-input-nexshop {
+      border-radius: 12px 0 0 12px !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      padding: 0.75rem 1.2rem;
+      font-size: 0.95rem;
+      background: #ffffff;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .search-btn-nexshop {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      border-radius: 0 12px 12px 0 !important;
+      padding: 0 1.5rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .search-btn-nexshop:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: white;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    }
+
+    .nav-link-custom {
+      color: #cbd5e1 !important;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.55rem 1rem !important;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .nav-link-custom:hover {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cart-badge-nexshop {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 800;
+      font-size: 0.75rem;
+      border-radius: 20px;
+      padding: 3px 9px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Floating WhatsApp Button */
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 999;
+      cursor: pointer;
+      text-decoration: none !important;
+      transition: all 0.3s ease;
+    }
+
+    .floating-whatsapp:hover {
+      transform: translateY(-4px) scale(1.03);
+      color: white;
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+    }
+
+    /* WhatsApp Auto-Assistant Modal Box */
+    .chat-box-modal {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 25px;
+      width: 350px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    .chat-box-header {
+      background: #075e54;
+      color: white;
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-box-body {
+      padding: 15px;
+      max-height: 320px;
+      overflow-y: auto;
+      background: #efeae2;
+    }
+
+    .chat-bubble-bot {
+      background: #ffffff;
+      color: #111b21;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .chat-bubble-user {
+      background: #d9fdd3;
+      color: #111b21;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      margin-left: auto;
+      max-width: 85%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .chat-opt-btn {
+      background: #ffffff;
+      border: 1px solid #25d366;
+      color: #075e54;
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-right: 5px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .chat-opt-btn:hover {
+      background: #25d366;
+      color: white;
+    }
+
+    /* Button Primary */
+    .btn-custom-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 0.65rem 1.4rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-custom-primary:hover {
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: #0b1329;
+      color: #94a3b8;
+      font-size: 0.88rem;
+    }
+
+    footer h6 {
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #34d399;
+    }
+
+    .pay-badge-custom {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-right: 6px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
   </style>
 </head>
 
 <body>
-  <!-- navbar -->
 
-<nav class="one-edge-shadow
-  navbar navbar-light
-  sticky-top navbar 
-  navbar-expand-lg
-  text-white">
-    <a class="navbar-brand ms-3 text-dark " href="/">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement d-none d-md-block">
+    <div class="container-fluid px-lg-5 d-flex justify-content-between align-items-center">
+      <div>
+        <span class="mr-3"><i class="fa-solid fa-truck-fast text-success mr-1"></i> Express Nationwide Delivery</span>
+        <span><i class="fa-solid fa-shield-check text-info mr-1"></i> 100% Authentic Products</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <span class="support-pill mr-3" onclick="toggleChatAssistant()">
+          <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Helpline: 01784299242
+        </span>
+        <a href="/orders"><i class="fa-solid fa-box-open mr-1"></i> Track Order</a>
+      </div>
+    </div>
+  </div>
 
-    <img src="https://www.freepnglogos.com/uploads/shopping-cart-png/shopping-cart-svg-png-icon-download-28.png" style="width:50px;height:50px,color:text-light;">E-Commerce</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- Main Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-nexshop sticky-top">
+    <div class="container-fluid px-lg-5">
+      
+      <a class="brand-logo-nexshop" href="/">
+        <div class="brand-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+        NexShop <span class="brand-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">BD</span>
+      </a>
 
+      <!-- Search Form -->
+      <form class="form-inline mx-auto my-2 my-lg-0 search-box-nexshop d-none d-md-flex" action="/store" method="GET">
+        <input class="form-control flex-grow-1 search-input-nexshop" type="search" name="query" value="{{request.GET.query|default:''}}" placeholder="Search products (e.g. Headphones, Punjabi, Watch, Shoes...)" aria-label="Search">
+        <button class="btn search-btn-nexshop" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/store">Store <span class="sr-only">(current)</span></a>
-        </li>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nexshopNav" aria-controls="nexshopNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-          </ul>
+      <div class="collapse navbar-collapse" id="nexshopNav">
+        <ul class="navbar-nav ml-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link-custom" href="/"><i class="fa-solid fa-store"></i> Catalog</a>
+          </li>
 
+          <li class="nav-item">
+            <a class="nav-link-custom" href="/cart">
+              <i class="fa-solid fa-bag-shopping"></i> Cart
+              <span class="cart-badge-nexshop ml-1">{{request.session.cart.keys|length}}</span>
+            </a>
+          </li>
 
-
-
-      <ul class=" navbar-nav my-2 my-lg-0">
-
-        <li class="nav-item active">
-          <a class="nav-link" href="/cart">Cart 
-            <span class="badge badge-success">{{request.session.cart.keys|length}}</span>
-            <span class="sr-only">(current)</span></a>
-        </li>
-
-        {% if request.session.customer %}
-        
-        <li class="nav-item active ">
-          <a class="nav-link" href="/orders">Orders<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active ">
-          <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
-        </li>
-        {% else %}
-       
-        <li class="nav-item active">
-          <a class="nav-link" href="/signup">Signup<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
-        </li>
-        {% endif %}
-
-
-      </ul>
-
+          {% if request.session.customer %}
+          <li class="nav-item">
+            <a class="nav-link-custom" href="/orders"><i class="fa-solid fa-boxes-packing"></i> My Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom text-white" href="/logout" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5 !important;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link-custom" href="/login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom" href="/signup" style="background: rgba(16, 185, 129, 0.2); color: #34d399 !important;"><i class="fa-solid fa-user-plus"></i> Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
 
     </div>
   </nav>
-  <!---->
-  {% block content %}{% endblock %}
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  <!-- Page Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Floating Customer Support WhatsApp Button -->
+  <div class="floating-whatsapp" onclick="toggleChatAssistant()">
+    <i class="fa-brands fa-whatsapp fa-xl"></i>
+    <span>WhatsApp Support</span>
+  </div>
+
+  <!-- Interactive WhatsApp Auto-Assistant Live Chat Modal -->
+  <div id="chatAssistantModal" class="chat-box-modal">
+    <div class="chat-box-header">
+      <div class="d-flex align-items-center">
+        <i class="fa-brands fa-whatsapp fa-xl mr-2 text-white"></i>
+        <div>
+          <h6 class="m-0 font-weight-bold text-white">NexShop Live Support Bot</h6>
+          <small class="text-white-50" style="font-size: 0.75rem;">Online 🟢 • Auto-Reply Active</small>
+        </div>
+      </div>
+      <button type="button" class="close text-white" onclick="toggleChatAssistant()">&times;</button>
+    </div>
+
+    <div class="chat-box-body" id="chat_messages">
+      <div class="chat-bubble-bot">
+        👋 <strong>Assalamu Alaikum!</strong> Welcome to NexShop Live Support (<strong>01784299242</strong>). Type a message below or pick an option:
+      </div>
+      <div id="chat_options">
+        <span class="chat-opt-btn" onclick="sendAutoReply('order')">📦 Order Tracking</span>
+        <span class="chat-opt-btn" onclick="sendAutoReply('delivery')">🚚 Delivery Charge</span>
+        <span class="chat-opt-btn" onclick="sendAutoReply('payment')">💳 Payment Methods</span>
+        <span class="chat-opt-btn" onclick="sendAutoReply('whatsapp')">📲 Chat on WhatsApp</span>
+      </div>
+    </div>
+
+    <!-- User Input Field -->
+    <div class="p-2 bg-white border-top d-flex align-items-center">
+      <input type="text" id="chat_user_input" class="form-control form-control-sm mr-2" placeholder="Type your message..." onkeypress="if(event.key==='Enter') sendCustomUserMessage()">
+      <button type="button" class="btn btn-sm btn-success font-weight-bold" onclick="sendCustomUserMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- NexShop Footer -->
+  <footer class="pt-5 pb-4 mt-5">
+    <div class="container-fluid px-lg-5">
+      <div class="row">
+        
+        <div class="col-md-3 mb-4">
+          <h6>Customer Support</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="https://api.whatsapp.com/send?phone=8801784299242&text=Assalamu%20Alaikum%20NexShop%20Support!%20I%20need%20help." target="_blank"><i class="fa-brands fa-whatsapp text-success mr-2"></i> WhatsApp: 01784299242</a></li>
+            <li class="mb-2"><a href="tel:01784299242"><i class="fa-solid fa-phone text-primary mr-2"></i> Call Support: 01784299242</a></li>
+            <li class="mb-2"><a href="/orders">Help & Support Center</a></li>
+            <li class="mb-2"><a href="/orders">Return & Refund Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h6>NexShop Platform</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="/">About NexShop</a></li>
+            <li class="mb-2"><a href="/">Privacy Policy</a></li>
+            <li class="mb-2"><a href="/">Terms of Service</a></li>
+            <li class="mb-2"><a href="/admin" target="_blank">Admin Control Panel</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h6>Accepted Payment Options</h6>
+          <div>
+            <span class="pay-badge-custom text-danger"><i class="fa-solid fa-mobile-screen mr-1"></i> bKash</span>
+            <span class="pay-badge-custom text-warning"><i class="fa-solid fa-bolt mr-1"></i> Nagad</span>
+            <span class="pay-badge-custom text-primary"><i class="fa-solid fa-paper-plane mr-1"></i> Rocket</span>
+            <span class="pay-badge-custom text-info"><i class="fa-regular fa-credit-card mr-1"></i> VISA / IBBL</span>
+            <span class="pay-badge-custom text-success"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Cash on Delivery</span>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h6>Need Assistance?</h6>
+          <div class="p-3 rounded border" style="background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08) !important;">
+            <p class="small text-white font-weight-bold mb-1"><i class="fa-solid fa-headset text-success mr-1"></i> 24/7 Helpline</p>
+            <h5 class="font-weight-bold text-success m-0"><a href="https://api.whatsapp.com/send?phone=8801784299242&text=Assalamu%20Alaikum!" target="_blank" class="text-success text-decoration-none">01784299242</a></h5>
+            <small class="text-muted">Contact us for any order issues or queries</small>
+          </div>
+        </div>
+
+      </div>
+
+      <hr style="border-color: rgba(255, 255, 255, 0.08);" class="my-4">
+
+      <div class="d-flex flex-wrap justify-content-between align-items-center small">
+        <p class="m-0">© 2026 NexShop Platform. All Rights Reserved.</p>
+        <div>
+          <a href="https://api.whatsapp.com/send?phone=8801784299242&text=Assalamu%20Alaikum!" target="_blank" class="mr-3 text-success"><i class="fa-brands fa-whatsapp fa-lg"></i></a>
+          <a href="/" class="mr-3 text-muted"><i class="fa-brands fa-facebook fa-lg"></i></a>
+          <a href="/" class="text-muted"><i class="fa-solid fa-globe fa-lg"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  function toggleChatAssistant() {
+    var modal = document.getElementById('chatAssistantModal');
+    if (modal.style.display === 'block') {
+      modal.style.display = 'none';
+    } else {
+      modal.style.display = 'block';
+    }
+  }
+
+  function sendAutoReply(type) {
+    var box = document.getElementById('chat_messages');
+
+    if (type === 'order') {
+      box.innerHTML += '<div class="chat-bubble-user">📦 How to track my order?</div>';
+      setTimeout(function() {
+        box.innerHTML += '<div class="chat-bubble-bot">🤖 <strong>Auto-Reply:</strong> You can track your placed orders in real-time from the <a href="/orders"><strong>My Orders</strong></a> page, or contact our support team at <strong>01784299242</strong>.</div>';
+        box.scrollTop = box.scrollHeight;
+      }, 400);
+    } else if (type === 'delivery') {
+      box.innerHTML += '<div class="chat-bubble-user">🚚 What is the delivery charge?</div>';
+      setTimeout(function() {
+        box.innerHTML += '<div class="chat-bubble-bot">🤖 <strong>Auto-Reply:</strong> Delivery charge is calculated at <strong>৳0.5 per KM</strong> based on your selected BD Map location from our Dhaka warehouse.</div>';
+        box.scrollTop = box.scrollHeight;
+      }, 400);
+    } else if (type === 'payment') {
+      box.innerHTML += '<div class="chat-bubble-user">💳 What payment methods are supported?</div>';
+      setTimeout(function() {
+        box.innerHTML += '<div class="chat-bubble-bot">🤖 <strong>Auto-Reply:</strong> We support Instant Auto Payments via <strong>bKash, Nagad, Rocket, Islami Bank VISA Card</strong>, and <strong>Cash on Delivery</strong>!</div>';
+        box.scrollTop = box.scrollHeight;
+      }, 400);
+    } else if (type === 'whatsapp') {
+      box.innerHTML += '<div class="chat-bubble-user">📲 Launching WhatsApp Messenger...</div>';
+      setTimeout(function() {
+        window.open("https://api.whatsapp.com/send?phone=8801784299242&text=Assalamu%20Alaikum%20NexShop%20Support!%20I%20need%20help%20with%20my%20order.", "_blank");
+      }, 400);
+    }
+  }
+
+  function sendCustomUserMessage() {
+    var input = document.getElementById('chat_user_input');
+    var msg = input.value.trim();
+    if (!msg) return;
+
+    var box = document.getElementById('chat_messages');
+    box.innerHTML += '<div class="chat-bubble-user">' + msg + '</div>';
+    input.value = '';
+    box.scrollTop = box.scrollHeight;
+
+    var msgLower = msg.toLowerCase();
+    var botReply = "";
+
+    if (msgLower.includes('hi') || msgLower.includes('hello') || msgLower.includes('slm') || msgLower.includes('assalamu')) {
+      botReply = "🤖 <strong>Auto-Reply:</strong> Assalamu Alaikum! Thank you for reaching out. How can we assist you with your order today?";
+    } else if (msgLower.includes('order') || msgLower.includes('track') || msgLower.includes('delivery')) {
+      botReply = "🤖 <strong>Auto-Reply:</strong> Orders are processed immediately. You can view your live order status on the <a href='/orders'><strong>My Orders</strong></a> page.";
+    } else if (msgLower.includes('pay') || msgLower.includes('bkash') || msgLower.includes('nagad') || msgLower.includes('money')) {
+      botReply = "🤖 <strong>Auto-Reply:</strong> All bKash, Nagad, Rocket, VISA and COD payments are auto-recorded and verified by Admin.";
+    } else {
+      botReply = "🤖 <strong>Auto-Reply:</strong> Thank you for messaging us! Our automated assistant has forwarded your query to support number <strong>01784299242</strong>.<br><a href='https://api.whatsapp.com/send?phone=8801784299242&text=" + encodeURIComponent("Assalamu Alaikum! " + msg) + "' target='_blank' class='btn btn-sm btn-success font-weight-bold mt-2 d-block'><i class='fa-brands fa-whatsapp mr-1'></i> Open WhatsApp Direct Chat</a>";
+    }
+
+    setTimeout(function() {
+      box.innerHTML += '<div class="chat-bubble-bot">' + botReply + '</div>';
+      box.scrollTop = box.scrollHeight;
+    }, 500);
+  }
+  </script>
+
+  <!-- JS Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>

@@ -1,0 +1,1044 @@
+[
+{
+    "model": "store.category",
+    "pk": 22,
+    "fields": {
+        "name": "Women's Fashion"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 23,
+    "fields": {
+        "name": "Men's Fashion"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 24,
+    "fields": {
+        "name": "Kids' Fashion"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 25,
+    "fields": {
+        "name": "Watches & Accessories"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 26,
+    "fields": {
+        "name": "Shoes & Handbags"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 27,
+    "fields": {
+        "name": "Books & Literature"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 28,
+    "fields": {
+        "name": "Home & Kitchen"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 29,
+    "fields": {
+        "name": "Health & Personal Care"
+    }
+},
+{
+    "model": "store.category",
+    "pk": 31,
+    "fields": {
+        "name": "Electronics & Gadgets"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 116,
+    "fields": {
+        "name": "Database System Concepts (DBMS)",
+        "price": 650,
+        "category": 27,
+        "description": "Standard Computer Science textbook covering relational database systems, SQL queries, normalization, indexing, and transaction management by Silberschatz, Korth & Sudarshan.",
+        "image": "uploads/products/dbms_book.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 117,
+    "fields": {
+        "name": "Introduction to Algorithms (CLRS)",
+        "price": 850,
+        "category": 27,
+        "description": "The essential computer science algorithms reference covering sorting, dynamic programming, graph theory, greedy algorithms, and NP-completeness.",
+        "image": "uploads/products/clrs_algorithms.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 118,
+    "fields": {
+        "name": "Operating System Concepts",
+        "price": 720,
+        "category": 27,
+        "description": "Comprehensive textbook explaining process synchronization, CPU scheduling, memory management, virtual memory, and file system storage.",
+        "image": "uploads/products/os_concepts.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 119,
+    "fields": {
+        "name": "Computer Networking: A Top-Down Approach",
+        "price": 680,
+        "category": 27,
+        "description": "Modern networking guide covering HTTP, TCP/IP, UDP, routing algorithms, socket programming, and wireless network security.",
+        "image": "uploads/products/networking_book.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 120,
+    "fields": {
+        "name": "Clean Code: Handbook of Agile Craftsmanship",
+        "price": 580,
+        "category": 27,
+        "description": "Software design handbook by Robert C. Martin detailing clean coding principles, refactoring techniques, and unit testing best practices.",
+        "image": "uploads/products/clean_code.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 121,
+    "fields": {
+        "name": "Deyal (দেয়াল) - Humayun Ahmed",
+        "price": 350,
+        "category": 27,
+        "description": "Famous historical and political novel based on post-independence Bangladesh by legendary writer Humayun Ahmed.",
+        "image": "uploads/products/deyal_book.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 122,
+    "fields": {
+        "name": "Pather Panchali (পথের পাঁচালী)",
+        "price": 320,
+        "category": 27,
+        "description": "Classic literary masterpiece depicting the innocent rural childhood of Apu and Durga by Bibhutibhushan Bandyopadhyay.",
+        "image": "uploads/products/pather_panchali.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 123,
+    "fields": {
+        "name": "Gitanjali (গীতাঞ্জলি) - Rabindranath Tagore",
+        "price": 280,
+        "category": 27,
+        "description": "Nobel Prize winning poetry collection by Asia's first Nobel laureate Rabindranath Tagore.",
+        "image": "uploads/products/gitanjali.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 124,
+    "fields": {
+        "name": "Byomkesh Samagra (ব্যোমকেশ সমগ্র)",
+        "price": 650,
+        "category": 27,
+        "description": "Complete anthology of mystery and detective stories featuring Truth-seeker Byomkesh Bakshi by Sharadindu Bandyopadhyay.",
+        "image": "uploads/products/byomkesh.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 125,
+    "fields": {
+        "name": "Sanchita (সঞ্চিতা) - Kazi Nazrul Islam",
+        "price": 400,
+        "category": 27,
+        "description": "Renowned collection of revolutionary poems and songs by Bangladesh's National Poet Kazi Nazrul Islam.",
+        "image": "uploads/products/sanchita.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 126,
+    "fields": {
+        "name": "Napa Extra (500mg + 65mg)",
+        "price": 30,
+        "category": 29,
+        "description": "Paracetamol & Caffeine tablets by Beximco Pharmaceuticals Ltd for fast relief of fever, headache, and body pain.",
+        "image": "uploads/products/napa_extra.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 127,
+    "fields": {
+        "name": "Seclo 20mg Omeprazole Capsule",
+        "price": 70,
+        "category": 29,
+        "description": "Square Pharmaceuticals Ltd proton pump inhibitor for hyperacidity, gastric ulcer, and heartburn relief.",
+        "image": "uploads/products/seclo_20.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 128,
+    "fields": {
+        "name": "Maxpro 20mg Esomeprazole",
+        "price": 90,
+        "category": 29,
+        "description": "Renata Limited esomeprazole gastro-resistant capsules for acid reflux and peptic ulcer treatment.",
+        "image": "uploads/products/maxpro_20.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 129,
+    "fields": {
+        "name": "Ace Plus (Paracetamol + Caffeine)",
+        "price": 30,
+        "category": 29,
+        "description": "Square Pharmaceuticals Ltd pain reliever and fever reducer tablets.",
+        "image": "uploads/products/ace_plus.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 130,
+    "fields": {
+        "name": "Fexo 120mg Fexofenadine",
+        "price": 90,
+        "category": 29,
+        "description": "Square Pharmaceuticals Ltd non-drowsy antihistamine for allergic rhinitis and skin allergies.",
+        "image": "uploads/products/fexo_120.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 131,
+    "fields": {
+        "name": "Omron Digital Blood Pressure Monitor (Pressure Mapa Machine)",
+        "price": 2850,
+        "category": 29,
+        "description": "Automatic digital upper arm BP monitor with Intellisense technology, arrhythmia detection, and memory storage.",
+        "image": "uploads/products/omron_bp_machine.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 132,
+    "fields": {
+        "name": "Accu-Chek Instant Blood Glucose Meter (Diabetes Mapa Machine)",
+        "price": 1650,
+        "category": 29,
+        "description": "Accurate diabetes testing kit with target range indicator, blood glucose meter, 10 lancets, and lancing device.",
+        "image": "uploads/products/accuchek_diabetes.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 133,
+    "fields": {
+        "name": "Omron Digital Clinical Thermometer",
+        "price": 250,
+        "category": 29,
+        "description": "Fast and accurate digital thermometer for oral, rectal, and underarm fever measurement with buzzer alert.",
+        "image": "uploads/products/digital_thermometer.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 134,
+    "fields": {
+        "name": "Fingertip Pulse Oximeter SpO2 Monitor",
+        "price": 850,
+        "category": 29,
+        "description": "OLED screen blood oxygen saturation SpO2 and pulse rate monitor for instant health check at home.",
+        "image": "uploads/products/pulse_oximeter.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 135,
+    "fields": {
+        "name": "Emergency Family First Aid Box Kit",
+        "price": 450,
+        "category": 29,
+        "description": "Complete medical first aid kit containing bandages, antiseptics, gauze, medical tape, and scissors for home safety.",
+        "image": "uploads/products/first_aid_kit.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 136,
+    "fields": {
+        "name": "Premium Semilong Cotton Panjabi for Men",
+        "price": 1850,
+        "category": 23,
+        "description": "High quality embroidered 100% cotton semilong Panjabi for Eid and festival occasions.",
+        "image": "uploads/products/men_panjabi.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 137,
+    "fields": {
+        "name": "Slim Fit Stretch Denim Jeans Pants",
+        "price": 1450,
+        "category": 23,
+        "description": "Comfortable washed stretch denim jeans with stylish slim fit design.",
+        "image": "uploads/products/men_jeans.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 138,
+    "fields": {
+        "name": "Premium Breathable Cotton Polo T-Shirt",
+        "price": 650,
+        "category": 23,
+        "description": "Classic collar polo t-shirt crafted from soft pique cotton fabric.",
+        "image": "uploads/products/men_polo.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 139,
+    "fields": {
+        "name": "Formal Full Sleeve Cotton Business Shirt",
+        "price": 1200,
+        "category": 23,
+        "description": "Smart crisp cotton formal button-down shirt ideal for office & corporate wear.",
+        "image": "uploads/products/men_shirt.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 140,
+    "fields": {
+        "name": "Casual Summer Printed T-Shirt",
+        "price": 450,
+        "category": 23,
+        "description": "Lightweight combed cotton round neck casual t-shirt for daily wear.",
+        "image": "uploads/products/men_tshirt.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 141,
+    "fields": {
+        "name": "Traditional Jamdani Handloom Saree",
+        "price": 3500,
+        "category": 22,
+        "description": "Authentic Bangladeshi woven Jamdani cotton-silk saree with intricate zari work.",
+        "image": "uploads/products/women_saree.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 142,
+    "fields": {
+        "name": "Designer Three-Piece Salwar Kameez Set",
+        "price": 2450,
+        "category": 22,
+        "description": "Embroidered cotton-lawn three piece suit with chiffon dupatta.",
+        "image": "uploads/products/women_kameez.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 143,
+    "fields": {
+        "name": "Premium Georgette Anarkali Gown",
+        "price": 2800,
+        "category": 22,
+        "description": "Gorgeous floor-length georgette party gown with delicate embroidery.",
+        "image": "uploads/products/women_gown.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 144,
+    "fields": {
+        "name": "Stylish Cotton Kurti / Tunic",
+        "price": 1250,
+        "category": 22,
+        "description": "Trendy printed cotton kurti suitable for university and casual outings.",
+        "image": "uploads/products/women_kurti.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 145,
+    "fields": {
+        "name": "Casual Women's Denim Jacket",
+        "price": 1650,
+        "category": 22,
+        "description": "Fashionable washed denim outerwear jacket for women.",
+        "image": "uploads/products/women_jacket.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 146,
+    "fields": {
+        "name": "Baby Boy Cotton Panjabi & Pyjama Set",
+        "price": 1150,
+        "category": 24,
+        "description": "Soft breathable cotton Panjabi set for kids festive celebrations.",
+        "image": "uploads/products/kids_panjabi.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 147,
+    "fields": {
+        "name": "Baby Girl Embroidered Party Frock",
+        "price": 1350,
+        "category": 24,
+        "description": "Beautiful net & satin party frock dress for little girls.",
+        "image": "uploads/products/kids_frock.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 148,
+    "fields": {
+        "name": "Kids Denim Jacket & Jeans Outfit Set",
+        "price": 1450,
+        "category": 24,
+        "description": "Stylish 2-piece denim jacket and jeans set for boys and girls.",
+        "image": "uploads/products/kids_denim.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 149,
+    "fields": {
+        "name": "Newborn Baby Soft Cotton Romper",
+        "price": 650,
+        "category": 24,
+        "description": "100% organic soft cotton baby bodysuit romper.",
+        "image": "uploads/products/kids_romper.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 150,
+    "fields": {
+        "name": "Casio Edifice Chronograph Stainless Steel Watch",
+        "price": 6500,
+        "category": 25,
+        "description": "Original Casio Edifice tachymeter water resistant analog chronograph watch.",
+        "image": "uploads/products/casio_edifice.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 151,
+    "fields": {
+        "name": "Curren Business Quartz Leather Watch",
+        "price": 1450,
+        "category": 25,
+        "description": "Elegant genuine leather strap wristwatch for men with date display.",
+        "image": "uploads/products/curren_watch.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 152,
+    "fields": {
+        "name": "Fastrack Digital Sports Watch",
+        "price": 1850,
+        "category": 25,
+        "description": "Rugged shock resistant digital sports watch with stopwatch and backlight.",
+        "image": "uploads/products/fastrack_sports.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 153,
+    "fields": {
+        "name": "Genuine Leather Belt & Wallet Gift Combo",
+        "price": 1250,
+        "category": 25,
+        "description": "100% cow leather executive wallet and adjustable belt gift box set.",
+        "image": "uploads/products/belt_wallet_combo.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 154,
+    "fields": {
+        "name": "Apex Leather Formal Oxford Shoes for Men",
+        "price": 3490,
+        "category": 26,
+        "description": "Premium genuine leather formal lace-up Oxford shoes by Apex Footwear.",
+        "image": "uploads/products/apex_shoes.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 155,
+    "fields": {
+        "name": "Bata Casual Comfort Sneakers",
+        "price": 1990,
+        "category": 26,
+        "description": "Lightweight breathable lifestyle walking sneakers by Bata.",
+        "image": "uploads/products/bata_sneakers.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 156,
+    "fields": {
+        "name": "Women's Stylish Shoulder Leather Handbag",
+        "price": 1850,
+        "category": 26,
+        "description": "Elegant spacious leather handbag with compartments for women.",
+        "image": "uploads/products/women_handbag.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 157,
+    "fields": {
+        "name": "Waterproof Laptop Travel Backpack",
+        "price": 1450,
+        "category": 26,
+        "description": "Durable 15.6 inch laptop backpack with USB charging port.",
+        "image": "uploads/products/travel_backpack.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 158,
+    "fields": {
+        "name": "Vision Multipurpose Electric Rice Cooker 2.8L",
+        "price": 2450,
+        "category": 28,
+        "description": "Non-stick inner pot automatic warm electric rice cooker.",
+        "image": "uploads/products/rice_cooker.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 159,
+    "fields": {
+        "name": "Non-Stick Marble Coating Cookware Set (5 Pcs)",
+        "price": 3250,
+        "category": 28,
+        "description": "Heavy gauge aluminum non-stick fry pan, wok, and saucepan set.",
+        "image": "uploads/products/cookware_set.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 160,
+    "fields": {
+        "name": "Stainless Steel Electric Hot Water Kettle 1.8L",
+        "price": 850,
+        "category": 28,
+        "description": "Fast boiling cordless electric kettle with auto shutoff protection.",
+        "image": "uploads/products/electric_kettle.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 161,
+    "fields": {
+        "name": "Pureit Classic Water Purifier Filter",
+        "price": 3800,
+        "category": 28,
+        "description": "Advanced multi-stage germkill technology gravity water purifier.",
+        "image": "uploads/products/water_purifier.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 162,
+    "fields": {
+        "name": "Personalized Customized Ceramic Coffee Mug Set",
+        "price": 450,
+        "category": 31,
+        "description": "Premium glossy ceramic mug for birthday and anniversary gift.",
+        "image": "uploads/products/belt_wallet_combo.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 163,
+    "fields": {
+        "name": "3D Crystal LED Nightlamp Globe",
+        "price": 850,
+        "category": 31,
+        "description": "Beautiful warm glowing galaxy crystal ball USB nightlight lamp.",
+        "image": "uploads/products/rice_cooker.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 164,
+    "fields": {
+        "name": "Realme Buds T300 Wireless TWS Earbuds (30dB ANC)",
+        "price": 2450,
+        "category": 31,
+        "description": "Active Noise Cancellation bluetooth earbuds with 40-hour battery life.",
+        "image": "uploads/products/realme_earbuds.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 165,
+    "fields": {
+        "name": "Anker PowerCore 20,000mAh Fast Charging Power Bank",
+        "price": 2850,
+        "category": 31,
+        "description": "High capacity dual USB power bank with PowerIQ fast charging.",
+        "image": "uploads/products/anker_powerbank.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 166,
+    "fields": {
+        "name": "Xiaomi Smart Band 8 AMOLED Fitness Tracker",
+        "price": 3450,
+        "category": 31,
+        "description": "1.62 inch AMOLED screen heart rate & SpO2 fitness smartwatch.",
+        "image": "uploads/products/xiaomi_band.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 167,
+    "fields": {
+        "name": "JBL GO 3 Portable Waterproof Bluetooth Speaker",
+        "price": 3850,
+        "category": 31,
+        "description": "Original JBL Pro Sound compact IP67 waterproof wireless speaker.",
+        "image": "uploads/products/jbl_speaker.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 168,
+    "fields": {
+        "name": "Executive Formal Suit & Blazer Set",
+        "price": 4500,
+        "category": 23,
+        "description": "Premium tailored formal 2-piece blazer and trousers set for corporate & wedding events.",
+        "image": "uploads/products/men_blazer.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 169,
+    "fields": {
+        "name": "Genuine Cowhide Leather Biker Jacket",
+        "price": 3200,
+        "category": 23,
+        "description": "100% authentic leather jacket with zippered pockets and quilted inner lining.",
+        "image": "uploads/products/men_leather_jacket.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 170,
+    "fields": {
+        "name": "Traditional Embroidered Kabli Suit Set",
+        "price": 2600,
+        "category": 23,
+        "description": "Rich cotton Kabli kurta set with matching pyjama for religious & cultural celebrations.",
+        "image": "uploads/products/men_kabli.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 171,
+    "fields": {
+        "name": "Slim Fit Casual Cotton Chino Pants",
+        "price": 1650,
+        "category": 23,
+        "description": "Stretchable twill cotton chino trousers suitable for office and weekend wear.",
+        "image": "uploads/products/men_chino.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 172,
+    "fields": {
+        "name": "Royal Katan Silk Party Saree",
+        "price": 4800,
+        "category": 22,
+        "description": "Luxurious woven Katan silk saree featuring golden zari embroidery.",
+        "image": "uploads/products/women_katan_saree.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 173,
+    "fields": {
+        "name": "Bridal Heavy Embroidered Lehenga Suit",
+        "price": 5500,
+        "category": 22,
+        "description": "Gorgeous partywear lehenga set with intricate velvet & net work.",
+        "image": "uploads/products/women_lehenga.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 174,
+    "fields": {
+        "name": "Soft Cotton Nightwear & Pyjama Set",
+        "price": 1100,
+        "category": 22,
+        "description": "Breathable 100% cotton 2-piece loungewear and nightwear set for women.",
+        "image": "uploads/products/women_nightwear.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 175,
+    "fields": {
+        "name": "Kids Festive Embroidered Sherwani Set",
+        "price": 2200,
+        "category": 24,
+        "description": "Traditional royal sherwani suit set for boys for weddings and festivals.",
+        "image": "uploads/products/kids_sherwani.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 176,
+    "fields": {
+        "name": "Girls Princess Layered Party Gown",
+        "price": 1850,
+        "category": 24,
+        "description": "Fancy net layered princess gown dress for girls.",
+        "image": "uploads/products/kids_party_gown.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 177,
+    "fields": {
+        "name": "Boys Summer Shorts & T-Shirt Outfit",
+        "price": 850,
+        "category": 24,
+        "description": "Comfortable 2-piece printed cotton shorts and tee set for kids.",
+        "image": "uploads/products/kids_shorts_set.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 178,
+    "fields": {
+        "name": "Megir Business Chronograph Quartz Watch",
+        "price": 2200,
+        "category": 25,
+        "description": "Stainless steel mesh strap military chronograph watch with luminescent hands.",
+        "image": "uploads/products/megir_watch.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 179,
+    "fields": {
+        "name": "Classic Aviator UV400 Protection Sunglasses",
+        "price": 950,
+        "category": 25,
+        "description": "Polarized metal frame aviator sunglasses for eye protection.",
+        "image": "uploads/products/sunglasses_aviator.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 180,
+    "fields": {
+        "name": "Executive Leather Laptop Briefcase Bag",
+        "price": 2850,
+        "category": 25,
+        "description": "Genuine leather messenger briefcase for professionals and university students.",
+        "image": "uploads/products/leather_briefcase.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 181,
+    "fields": {
+        "name": "Bata Leather Slip-on Formal Loafers",
+        "price": 2690,
+        "category": 26,
+        "description": "Comfortable cushioned genuine leather loafers by Bata Bangladesh.",
+        "image": "uploads/products/bata_loafers.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 182,
+    "fields": {
+        "name": "Apex Ladies Elegant High Heel Pumps",
+        "price": 2490,
+        "category": 26,
+        "description": "Stylish pointed-toe high heel pumps for formal & evening wear by Apex.",
+        "image": "uploads/products/apex_heels.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 183,
+    "fields": {
+        "name": "Multipurpose Travel Duffle Gym Bag",
+        "price": 1250,
+        "category": 26,
+        "description": "Spacious water-resistant duffle bag with shoe compartment.",
+        "image": "uploads/products/travel_duffle.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 184,
+    "fields": {
+        "name": "Paradoxical Sajid (প্যারাডক্সিক্যাল সাজিদ) - Arif Azad",
+        "price": 280,
+        "category": 27,
+        "description": "Bestselling Bengali apologetics and logic-based book by Arif Azad.",
+        "image": "uploads/products/sajid_book.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 185,
+    "fields": {
+        "name": "Misir Ali Samagra (মিসির আলি সমগ্র) - Humayun Ahmed",
+        "price": 650,
+        "category": 27,
+        "description": "Complete anthology of psychological thriller stories featuring Misir Ali.",
+        "image": "uploads/products/misir_ali.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 186,
+    "fields": {
+        "name": "Haimanti & Selected Short Stories - Rabindranath Tagore",
+        "price": 220,
+        "category": 27,
+        "description": "Classic short story collection by Nobel laureate Rabindranath Tagore.",
+        "image": "uploads/products/haimanti.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 187,
+    "fields": {
+        "name": "Walton Electric Blender & Grinder 750W",
+        "price": 2850,
+        "category": 28,
+        "description": "Heavy-duty 3 stainless steel jar juicer & spice grinder by Walton.",
+        "image": "uploads/products/electric_blender.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 188,
+    "fields": {
+        "name": "Aluminium Non-Stick Pressure Cooker 5.0L",
+        "price": 2650,
+        "category": 28,
+        "description": "Safety valve induction bottom fast cooking pressure cooker.",
+        "image": "uploads/products/pressure_cooker.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 189,
+    "fields": {
+        "name": "PTC Ceramic Room Heater Blower",
+        "price": 1850,
+        "category": 28,
+        "description": "Energy efficient oscillating warm air heater for winter.",
+        "image": "uploads/products/room_heater.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 190,
+    "fields": {
+        "name": "Sergel 20mg Esomeprazole Capsule",
+        "price": 70,
+        "category": 29,
+        "description": "Healthcare Pharmaceuticals Ltd capsules for heartburn & GERD relief.",
+        "image": "uploads/products/sergel_20.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 191,
+    "fields": {
+        "name": "Fast 500mg Paracetamol Tablets",
+        "price": 25,
+        "category": 29,
+        "description": "ACME Laboratories Ltd rapid pain relief & fever reducer.",
+        "image": "uploads/products/fast_500.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 192,
+    "fields": {
+        "name": "SMC Orsaline N (Box of 20 Sachets)",
+        "price": 60,
+        "category": 29,
+        "description": "Oral rehydration salt for dehydration and electrolyte replenishment.",
+        "image": "uploads/products/orsaline.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 193,
+    "fields": {
+        "name": "Instant Hand Sanitizer Gel 500ml",
+        "price": 180,
+        "category": 29,
+        "description": "70% isopropyl alcohol moisturizing hand disinfectant pump bottle.",
+        "image": "uploads/products/hand_sanitizer.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 194,
+    "fields": {
+        "name": "Walton Smart Android TV Streaming Box 4K",
+        "price": 3250,
+        "category": 31,
+        "description": "Quad-core Android TV box with Google Assistant & Chromecast built-in.",
+        "image": "uploads/products/walton_tv_box.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 195,
+    "fields": {
+        "name": "Rechargeable Mini USB Desk Fan",
+        "price": 850,
+        "category": 31,
+        "description": "Portable 3-speed quiet cooling fan with built-in battery.",
+        "image": "uploads/products/usb_desk_fan.jpg"
+    }
+},
+{
+    "model": "store.products",
+    "pk": 196,
+    "fields": {
+        "name": "Gaming RGB Mechanical Keyboard & Mouse Combo",
+        "price": 1450,
+        "category": 31,
+        "description": "Rainbow LED backlit ergonomic keyboard and high DPI gaming mouse.",
+        "image": "uploads/products/gaming_keyboard.jpg"
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 5,
+    "fields": {
+        "first_name": "Tanushree",
+        "last_name": "Sharma",
+        "phone": "+349743874",
+        "email": "tanushree7252@gmail.com",
+        "password": "pbkdf2_sha256$216000$RB7ATlbKb9Zf$7/w0/UKdoRdUV4/fOZuL5EN06n7l9Wan+r1Ad7jTUPE="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 6,
+    "fields": {
+        "first_name": "geekfor",
+        "last_name": "geek",
+        "phone": "2379549475",
+        "email": "geek123@gmail.com",
+        "password": "pbkdf2_sha256$216000$STXuzmJYpT6H$hJixbM7AKBrHmZYYDxWGqJn6aIfwueBhSNbRCHyr+7E="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 7,
+    "fields": {
+        "first_name": "Geeks",
+        "last_name": "forgeeks",
+        "phone": "2536472897",
+        "email": "geek@gmail.com",
+        "password": "pbkdf2_sha256$216000$BLBVbxxfPjlV$F4wAcTOMSb67JoQImXEOjXPDDgER08/EPze8RSDa7yk="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 8,
+    "fields": {
+        "first_name": "Geeks",
+        "last_name": "forgeeks",
+        "phone": "2536472897",
+        "email": "geek23@gmail.com",
+        "password": "pbkdf2_sha256$216000$l4HiM3ZIFTn7$lQ3/ZvzwVpCa8nlt3jg76Rb29A1jG367vHKMZ9gkzjU="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 9,
+    "fields": {
+        "first_name": "Ali",
+        "last_name": "Jahan",
+        "phone": "7698765432",
+        "email": "jahan242-15-846@diu.edu.bd",
+        "password": "pbkdf2_sha256$216000$CECDwzmwUkeg$cBiVl9fk+nHiwy9uNl2fclJLMdMzGH1rEFUD4FKKTb0="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 10,
+    "fields": {
+        "first_name": "Ali",
+        "last_name": "Jahan",
+        "phone": "7620982579",
+        "email": "jahan242-15-846@diu.edu.bd",
+        "password": "pbkdf2_sha256$216000$6LUq57aoW1FB$uVqy7EhQKQ54nq4rhYUttWvur78Wxmd13SCFIdyieYQ="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 11,
+    "fields": {
+        "first_name": "Ali",
+        "last_name": "Jahan",
+        "phone": "01712157686",
+        "email": "riashad335@gmail.com",
+        "password": "pbkdf2_sha256$600000$nv3z0QCRKgekRx9zzGEtNn$J2M6V8Ojn2tv4BzbJEntNmyUpYbHlIZgoSyHNWcmn1A="
+    }
+},
+{
+    "model": "store.customer",
+    "pk": 12,
+    "fields": {
+        "first_name": "mohammad",
+        "last_name": "sami",
+        "phone": "01712157686",
+        "email": "tradingsami04@gmail.com",
+        "password": "pbkdf2_sha256$600000$S4SCsXrZgDoQgL5uPXBlGS$jukMDjVNXgufi54d/CthRpd4c1cjbP7iGVIyCk4T1mQ="
+    }
+}
+]

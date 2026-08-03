@@ -1,94 +1,795 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
-<div class="container">
-   <div class="border rounded p-4 m-4">
-        <p class="display-4 pl-4 ml-4 btn btn-success rounded-pill">Your Cart</p>
-        <hr>
-        <table class="table">
-            <thead>
+
+<!-- Leaflet.js BD Map CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  /* Premium Payment Gateway Cards Styling */
+  .payment-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .payment-card:hover {
+    border-color: #94a3b8;
+    transform: translateY(-2px);
+  }
+
+  .payment-card.selected {
+    border-color: #10b981;
+    background: #f0fdf4;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.15);
+  }
+
+  .payment-card input[type="radio"] {
+    display: none;
+  }
+
+  .brand-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .badge-bkash { background: #e2136e; }
+  .badge-nagad { background: #f7941d; }
+  .badge-rocket { background: #8c3494; }
+  .badge-card { background: linear-gradient(135deg, #006837, #1a1f71); }
+  .badge-cod { background: #27ae60; }
+
+  /* Gateway Overlay Modal Styling */
+  .gateway-modal-header {
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  .gateway-header-bkash { background: #e2136e; }
+  .gateway-header-nagad { background: #f7941d; }
+  .gateway-header-rocket { background: #8c3494; }
+  .gateway-header-card { background: linear-gradient(135deg, #006837, #1a1f71); }
+
+  .gateway-modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .trx-pill {
+    background: #e2e8f0;
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* Location Box Style */
+  .location-box {
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 16px;
+    background: #f8fafc;
+  }
+</style>
+
+<div class="container py-4">
+  <div class="row">
+    
+    <!-- Cart Table Column -->
+    <div class="col-lg-8 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+          <h5 class="m-0 font-weight-bold text-dark"><i class="fa-solid fa-cart-shopping text-success mr-2"></i> Shopping Cart</h5>
+          <span class="badge badge-light border px-3 py-2 text-muted" style="font-size: 0.9rem;">{{products|length}} Product(s)</span>
+        </div>
+        
+        <div class="card-body p-0">
+          {% if products %}
+          <div class="table-responsive">
+            <table class="table table-hover align-middle m-0">
+              <thead class="bg-light text-muted small text-uppercase">
                 <tr>
-                    <th>Sno.</th>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
+                  <th class="border-0 pl-4">Item</th>
+                  <th class="border-0">Product Name</th>
+                  <th class="border-0 text-center">Unit Price</th>
+                  <th class="border-0 text-center">Quantity</th>
+                  <th class="border-0 text-center">Total</th>
+                  <th class="border-0 text-right pr-4">Action</th>
                 </tr>
-            </thead>
-            <tbody>
-                
+              </thead>
+              <tbody>
                 {% for product in products %}
                 <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td><img style="height: 80px;" class="rounded-circle" src="{{product.image.url}}" alt=""></td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.price|currency}}</td>
-                    <td>{{product|cart_quantity:request.session.cart}}</td>
-                    <td>{{product|price_total:request.session.cart|currency}}</td>
-                </tr>
+                  <td class="pl-4 align-middle">
+                    <img src="{{product.image.url}}" class="rounded border" style="width: 55px; height: 55px; object-fit: cover;" alt="">
+                  </td>
+                  <td class="align-middle font-weight-bold text-dark">{{product.name}}</td>
+                  <td class="align-middle text-center">{{product.price|currency}}</td>
+                  
+                  <!-- Quantity Controls -->
+                  <td class="align-middle text-center">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <form action="/cart" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="product" value="{{product.id}}">
+                        <input type="hidden" name="remove" value="True">
+                        <button type="submit" class="btn btn-sm btn-outline-danger font-weight-bold px-2 py-0" style="border-radius: 6px;">-</button>
+                      </form>
 
+                      <span class="badge badge-light border px-3 py-2 mx-2 font-weight-bold text-dark" style="font-size: 0.95rem;">
+                        {{product|cart_quantity:request.session.cart}}
+                      </span>
+
+                      <form action="/cart" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="product" value="{{product.id}}">
+                        <button type="submit" class="btn btn-sm btn-outline-success font-weight-bold px-2 py-0" style="border-radius: 6px;">+</button>
+                      </form>
+                    </div>
+                  </td>
+
+                  <td class="align-middle text-center font-weight-bold text-success" style="font-size: 1.05rem;">
+                    {{product|price_total:request.session.cart|currency}}
+                  </td>
+
+                  <!-- Delete / Remove Button -->
+                  <td class="align-middle text-right pr-4">
+                    <form action="/cart" method="POST" class="d-inline">
+                      {% csrf_token %}
+                      <input type="hidden" name="product" value="{{product.id}}">
+                      <input type="hidden" name="clear_item" value="True">
+                      <button type="submit" class="btn btn-sm btn-outline-danger font-weight-bold px-2 py-1" style="border-radius: 8px;" title="Remove from cart">
+                        <i class="fa-solid fa-trash-can mr-1"></i> Remove
+                      </button>
+                    </form>
+                  </td>
+                </tr>
                 {% endfor %}
-               
-            </tbody>
-
-            <tfoot>
-                <tr>
-                    <th colspan="4"></th>
-                    <th class="" colspan="">Total</th>
-                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>
-                </tr>
-            </tfoot>
-        </table>
-        <hr>
-        <div class="m-3 p-3">
-            <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-success border rounded  col-lg-3 float-right">Check out</a>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-white py-3 border-top d-flex justify-content-between align-items-center">
+            <a href="/" class="btn btn-outline-success font-weight-bold" style="border-radius: 10px;"><i class="fa-solid fa-arrow-left mr-2"></i> Continue Shopping</a>
+            <span class="small text-muted font-weight-bold"><i class="fa-solid fa-shield-check text-success mr-1"></i> Safe & Secure Checkout</span>
+          </div>
+          {% else %}
+          <div class="text-center py-5">
+            <i class="fa-solid fa-basket-shopping fa-3x text-muted mb-3" style="opacity: 0.4;"></i>
+            <h5 class="text-muted font-weight-bold">Your cart is empty!</h5>
+            <p class="text-muted small">Explore products and add items to your cart.</p>
+            <a href="/" class="btn btn-custom-primary mt-2"><i class="fa-solid fa-arrow-left mr-1"></i> Start Shopping</a>
+          </div>
+          {% endif %}
         </div>
-   </div>
+      </div>
+    </div>
+
+    <!-- Order Summary & Checkout Column -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm border-0 sticky-top" style="top: 85px;">
+        <div class="card-header bg-white py-3 border-bottom">
+          <h5 class="m-0 font-weight-bold text-dark"><i class="fa-solid fa-receipt text-primary mr-2"></i> Order Summary</h5>
+        </div>
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Subtotal</span>
+            <span class="font-weight-bold">{{products|total_cart_price:request.session.cart|currency}}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-muted">Delivery Fee</span>
+            <span class="text-success font-weight-bold" id="summary_delivery_fee">৳60</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <span class="h6 font-weight-bold m-0">Grand Total</span>
+            <span class="h4 font-weight-bold text-success m-0" id="summary_grand_total">৳{{products|total_cart_price:request.session.cart}}</span>
+          </div>
+
+          {% if products %}
+          <button type="button" class="btn btn-custom-primary btn-block btn-lg shadow-sm mb-2" data-toggle="modal" data-target="#checkoutModal" onclick="initBDMap()">
+            <i class="fa-solid fa-lock mr-2"></i> Proceed to Checkout
+          </button>
+          
+          <!-- Secondary Continue Shopping Option -->
+          <a href="/" class="btn btn-outline-secondary btn-block font-weight-bold py-2" style="border-radius: 10px;">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Continue Shopping
+          </a>
+          {% else %}
+          <button class="btn btn-secondary btn-block btn-lg" disabled>Cart is Empty</button>
+          <a href="/" class="btn btn-custom-primary btn-block mt-2">Browse Catalog</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- 1. MAIN CHECKOUT & PAYMENT METHOD MODAL -->
+<!-- ========================================== -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      
+      <div class="modal-header bg-dark text-white p-4" style="border-top-left-radius: 16px; border-top-right-radius: 16px;">
+        <div>
+          <h5 class="modal-title font-weight-bold"><i class="fa-solid fa-shield-halved text-success mr-2"></i> Shipping & Payment Information</h5>
+          <small class="text-muted">Select your delivery city and preferred payment gateway</small>
+        </div>
+        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body p-4">
+        <!-- Hidden Main Form submitted on Gateway Completion -->
+        <form id="finalOrderForm" action="/check-out" method="POST">
+          {% csrf_token %}
+          
+          <input type="hidden" id="final_payment_method" name="payment_method" value="bKash">
+          <input type="hidden" id="final_transaction_id" name="transaction_id" value="">
+          <input type="hidden" id="delivery_distance" name="delivery_distance" value="120">
+          <input type="hidden" id="delivery_charge" name="delivery_charge" value="60">
+
+          <!-- Delivery Details & Professional City Selection -->
+          <div class="location-box mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <label class="font-weight-bold text-dark m-0">
+                <i class="fa-solid fa-location-dot text-danger mr-1"></i> Delivery Region / City <span class="text-danger">*</span>
+              </label>
+              <button type="button" class="btn btn-sm btn-outline-primary font-weight-bold" onclick="detectGPSLocation()">
+                <i class="fa-solid fa-crosshairs mr-1"></i> Auto-Detect My Location
+              </button>
+            </div>
+
+            <!-- District Dropdown -->
+            <div class="form-group mb-3">
+              <select id="district_preset" class="form-control form-control-lg font-weight-bold" onchange="onDistrictSelect(this)">
+                <option value="23.8103,90.4125,Dhaka City">Dhaka City (Inside Dhaka)</option>
+                <option value="23.9999,90.4203,Gazipur">Gazipur District</option>
+                <option value="23.6238,90.5000,Narayanganj">Narayanganj District</option>
+                <option value="23.4607,91.1809,Comilla">Comilla City</option>
+                <option value="24.7471,90.4203,Mymensingh">Mymensingh Division</option>
+                <option value="22.7010,90.3535,Barisal">Barisal Division</option>
+                <option value="22.3569,91.7832,Chittagong">Chittagong City</option>
+                <option value="24.8949,91.8687,Sylhet">Sylhet Division</option>
+                <option value="24.3636,88.6241,Rajshahi">Rajshahi Division</option>
+                <option value="22.8456,89.5403,Khulna">Khulna Division</option>
+                <option value="25.7439,89.2752,Rangpur">Rangpur Division</option>
+              </select>
+            </div>
+
+            <!-- Optional Collapsible Map Toggle -->
+            <div class="mb-2">
+              <a href="javascript:void(0)" class="small text-muted font-weight-bold" onclick="toggleMapDisplay()">
+                <i class="fa-solid fa-map mr-1"></i> Adjust pin precisely on map (Optional)
+              </a>
+            </div>
+
+            <div id="map_wrapper" style="display: none;" class="mb-3">
+              <div id="bd_map" style="height: 200px; border-radius: 10px; border: 1px solid #cbd5e1;"></div>
+            </div>
+
+            <!-- Delivery Summary Alert -->
+            <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded border">
+              <div>
+                <span class="small text-muted font-weight-bold d-block">DELIVERY FEE</span>
+                <span class="h5 font-weight-bold text-success mb-0" id="modal_charge_text">৳60</span>
+              </div>
+              <div class="text-right">
+                <span class="small text-muted font-weight-bold d-block">ESTIMATED DELIVERY</span>
+                <span class="small font-weight-bold text-dark"><i class="fa-solid fa-truck-fast text-primary mr-1"></i> 2 - 3 Business Days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label class="font-weight-bold text-dark small text-uppercase">Full Delivery Address <span class="text-danger">*</span></label>
+              <input type="text" id="delivery_address" name="address" required class="form-control" value="Dhaka City" placeholder="House no, Road, Area details...">
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label class="font-weight-bold text-dark small text-uppercase">Contact Mobile Number <span class="text-danger">*</span></label>
+              <input type="text" id="delivery_phone" name="phone" required class="form-control" value="01784299242" placeholder="017xxxxxxxx">
+            </div>
+          </div>
+
+          <hr class="my-3">
+          <label class="font-weight-bold text-dark small text-uppercase d-block mb-3">Select Payment Gateway:</label>
+
+          <!-- Interactive Payment Gateway Selection Cards -->
+          <div class="row">
+            
+            <!-- bKash Option -->
+            <div class="col-md-6">
+              <label class="payment-card selected" id="card_bkash" onclick="selectGateway('bkash', 'bKash')">
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="payment_choice" value="bKash" checked>
+                  <div class="brand-badge badge-bkash mr-3"><i class="fa-solid fa-mobile-screen"></i></div>
+                  <div>
+                    <h6 class="m-0 font-weight-bold text-danger">bKash Direct Pay</h6>
+                    <small class="text-muted">Instant Auto Payment</small>
+                  </div>
+                </div>
+                <i class="fa-solid fa-circle-check text-success h5 m-0 check-icon"></i>
+              </label>
+            </div>
+
+            <!-- Nagad Option -->
+            <div class="col-md-6">
+              <label class="payment-card" id="card_nagad" onclick="selectGateway('nagad', 'Nagad')">
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="payment_choice" value="Nagad">
+                  <div class="brand-badge badge-nagad mr-3"><i class="fa-solid fa-bolt"></i></div>
+                  <div>
+                    <h6 class="m-0 font-weight-bold text-warning" style="color: #d97706 !important;">Nagad Direct Pay</h6>
+                    <small class="text-muted">Instant Auto Payment</small>
+                  </div>
+                </div>
+                <i class="fa-solid fa-circle-check text-success h5 m-0 check-icon d-none"></i>
+              </label>
+            </div>
+
+            <!-- Rocket Option -->
+            <div class="col-md-6">
+              <label class="payment-card" id="card_rocket" onclick="selectGateway('rocket', 'Rocket')">
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="payment_choice" value="Rocket">
+                  <div class="brand-badge badge-rocket mr-3"><i class="fa-solid fa-paper-plane"></i></div>
+                  <div>
+                    <h6 class="m-0 font-weight-bold" style="color: #8c3494;">Rocket Direct Pay</h6>
+                    <small class="text-muted">Instant Auto Payment</small>
+                  </div>
+                </div>
+                <i class="fa-solid fa-circle-check text-success h5 m-0 check-icon d-none"></i>
+              </label>
+            </div>
+
+            <!-- Card / IBBL VISA Option -->
+            <div class="col-md-6">
+              <label class="payment-card" id="card_ibbl" onclick="selectGateway('card', 'Islami Bank / VISA Card')">
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="payment_choice" value="Islami Bank / VISA Card">
+                  <div class="brand-badge badge-card mr-3"><i class="fa-regular fa-credit-card"></i></div>
+                  <div>
+                    <h6 class="m-0 font-weight-bold text-dark">VISA / Islami Bank</h6>
+                    <small class="text-muted">Debit/Credit Card Pay</small>
+                  </div>
+                </div>
+                <i class="fa-solid fa-circle-check text-success h5 m-0 check-icon d-none"></i>
+              </label>
+            </div>
+
+            <!-- Cash on Delivery Option -->
+            <div class="col-12">
+              <label class="payment-card mb-0" id="card_cod" onclick="selectGateway('cod', 'Cash on Delivery')">
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="payment_choice" value="Cash on Delivery">
+                  <div class="brand-badge badge-cod mr-3"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                  <div>
+                    <h6 class="m-0 font-weight-bold text-success">Cash on Delivery (COD)</h6>
+                    <small class="text-muted">Pay with cash upon delivery</small>
+                  </div>
+                </div>
+                <i class="fa-solid fa-circle-check text-success h5 m-0 check-icon d-none"></i>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- Optional manual TrxID toggle -->
+          <div class="mt-3 text-right">
+            <a href="javascript:void(0)" class="small text-muted font-weight-bold" onclick="toggleManualTrx()"><i class="fa-solid fa-pen mr-1"></i> Already paid externally? Enter manual TrxID</a>
+          </div>
+
+          <div id="manual_trx_container" class="mt-2 p-3 border rounded bg-light" style="display: none;">
+            <label class="small font-weight-bold text-dark">Manual Transaction ID (TrxID):</label>
+            <input type="text" id="manual_trx_input" class="form-control" placeholder="e.g. 9J7X82K1">
+          </div>
+
+          <div class="modal-footer px-0 pb-0 mt-4">
+            <button type="button" class="btn btn-light border px-4 font-weight-bold" data-dismiss="modal">Cancel</button>
+            <button type="button" id="pay_now_btn" class="btn btn-success btn-lg px-5 font-weight-bold" onclick="startInstantPayment()">
+              <i class="fa-solid fa-bolt mr-2"></i> Pay <span id="final_pay_btn_amount">৳{{products|total_cart_price:request.session.cart}}</span> & Place Order
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 
-<!-- modal -->
+<!-- ============================================================== -->
+<!-- 2. DIRECT AUTOMATED PAYMENT GATEWAY SIMULATION OVERLAY MODAL -->
+<!-- ============================================================== -->
+<div class="modal fade" id="gatewayModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 420px;">
+    <div class="modal-content gateway-modal-content">
+      
+      <!-- Header dynamically styled by selected Gateway -->
+      <div id="gw_header" class="gateway-modal-header gateway-header-bkash">
+        <h4 class="font-weight-bold mb-1" id="gw_brand_name">bKash Payment Gateway</h4>
+        <small id="gw_merchant_info">Merchant: <strong>E-Shop BD</strong></small>
+      </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-              Check Out Form
-          </h5>
-          <hr>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+      <div class="modal-body p-4 text-center">
+        <!-- Amount Badge -->
+        <div class="bg-light p-3 rounded mb-3 border">
+          <small class="text-muted text-uppercase d-block font-weight-bold">Total Amount to Pay</small>
+          <span class="h3 font-weight-bold text-dark" id="gw_total_amount">৳{{products|total_cart_price:request.session.cart}}</span>
+        </div>
+
+        <!-- Step 1: Account Input / Confirmation -->
+        <div id="gw_step1">
+          <div id="gw_mfs_input_box">
+            <label class="small font-weight-bold text-muted text-uppercase d-block mb-1">Your Mobile Banking Account Number</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white"><i class="fa-solid fa-phone text-muted"></i></span>
+              </div>
+              <input type="text" id="gw_account_no" class="form-control form-control-lg font-weight-bold text-center" value="01784299242">
+            </div>
+          </div>
+
+          <div id="gw_card_input_box" style="display: none;" class="text-left">
+            <div class="form-group mb-2">
+              <label class="small font-weight-bold text-muted mb-0">Cardholder Name</label>
+              <input type="text" class="form-control font-weight-bold" value="ALI JAHAN RIASHAD" readonly>
+            </div>
+            <div class="form-group mb-2">
+              <label class="small font-weight-bold text-muted mb-0">Islami Bank VISA Card Number</label>
+              <input type="text" class="form-control font-weight-bold" value="4170 3310 2415 5631" readonly>
+            </div>
+            <div class="row">
+              <div class="col-6 form-group mb-2">
+                <label class="small font-weight-bold text-muted mb-0">Expiry</label>
+                <input type="text" class="form-control text-center font-weight-bold" value="09/26" readonly>
+              </div>
+              <div class="col-6 form-group mb-2">
+                <label class="small font-weight-bold text-muted mb-0">CVV</label>
+                <input type="password" class="form-control text-center font-weight-bold" value="842" readonly>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success btn-lg btn-block font-weight-bold py-2 shadow-sm" onclick="processGwStep2()">
+            Confirm & Send OTP <i class="fa-solid fa-arrow-right ml-1"></i>
           </button>
         </div>
-        <div class="modal-body">
-          <div class="m-2 p-3">
-            <form action="/check-out" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="">Address</label>
-                  <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                  
-                </div>
-                <div class="form-group">
-                    <label for="">Phone</label>
-                    <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                  </div>
 
-                  <input type="submit" class="btn float-right btn-outline-success col-lg-6" value="Check out">
-            </form>
+        <!-- Step 2: Verification / OTP -->
+        <div id="gw_step2" style="display: none;">
+          <div class="alert alert-info py-2 mb-3 border-info" style="background: #e0f2fe;">
+            <small class="font-weight-bold text-dark" id="otp_sent_info"><i class="fa-solid fa-comment-sms text-primary mr-1"></i> SMS OTP code sent to your mobile!</small>
           </div>
+          <label class="small font-weight-bold text-muted text-uppercase d-block mb-1">Enter 6-Digit Verification Code (OTP)</label>
+          <input type="text" id="gw_otp_input" class="form-control form-control-lg text-center font-weight-bold letter-spacing-2 mb-3" placeholder="______" maxlength="6">
+
+          <button type="button" class="btn btn-primary btn-lg btn-block font-weight-bold py-2 shadow-sm" onclick="processGwStep3()">
+            Verify OTP & Complete Pay <i class="fa-solid fa-check-circle ml-1"></i>
+          </button>
         </div>
-        
+
+        <!-- Step 3: Instant Success Loader -->
+        <div id="gw_step3" style="display: none;" class="py-3">
+          <div class="spinner-border text-success mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+          <h5 class="font-weight-bold text-success">Processing Payment...</h5>
+          <p class="text-muted small m-0">Connecting to Bank / Payment Gateway</p>
+        </div>
+
+        <!-- Step 4: Success Message -->
+        <div id="gw_step4" style="display: none;" class="py-2">
+          <div class="text-success mb-2">
+            <i class="fa-solid fa-circle-check fa-4x"></i>
+          </div>
+          <h4 class="font-weight-bold text-dark mb-1">Payment Successful!</h4>
+          <p class="text-muted small mb-3">Your transaction has been verified by Bank Gateway.</p>
+          <div class="trx-pill p-2 rounded border mb-3">
+            TrxID: <span id="generated_trx_display" class="text-primary font-weight-bold">TRX-BK-984210</span>
+          </div>
+          <small class="text-muted d-block mb-2">Redirecting to Order History...</small>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 
+<script>
+var currentGateway = 'bKash';
+var cartSubtotal = {{products|total_cart_price:request.session.cart}};
+var originLat = 23.8103, originLng = 90.4125; // Dhaka Central Warehouse
+var map, marker;
+var currentDistanceKm = 120;
+var currentDeliveryFee = 60; // 0.5 TK per km (120 km * 0.5 = 60 TK)
 
+// Initialize Leaflet BD Map
+function initBDMap() {
+  updateLocationAndCharge(originLat, originLng, 'Dhaka City');
+}
+
+function toggleMapDisplay() {
+  var wrapper = document.getElementById('map_wrapper');
+  if (wrapper.style.display === 'none') {
+    wrapper.style.display = 'block';
+    if (!map) {
+      map = L.map('bd_map').setView([23.8103, 90.4125], 8);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
+      marker = L.marker([23.8103, 90.4125], { draggable: true }).addTo(map);
+      
+      marker.on('dragend', function(e) {
+        var latlng = e.target.getLatLng();
+        updateLocationAndCharge(latlng.lat, latlng.lng, 'Selected Map Location');
+      });
+
+      map.on('click', function(e) {
+        marker.setLatLng(e.latlng);
+        updateLocationAndCharge(e.latlng.lat, e.latlng.lng, 'Clicked Map Location');
+      });
+    } else {
+      setTimeout(function() { map.invalidateSize(); }, 200);
+    }
+  } else {
+    wrapper.style.display = 'none';
+  }
+}
+
+function detectGPSLocation() {
+  if (navigator.geolocation) {
+    Swal.fire({ title: 'Locating...', text: 'Fetching your GPS location', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+    navigator.geolocation.getCurrentPosition(function(position) {
+      Swal.close();
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+      updateLocationAndCharge(lat, lng, 'My GPS Location');
+      if (map && marker) {
+        map.setView([lat, lng], 11);
+        marker.setLatLng([lat, lng]);
+      }
+    }, function(error) {
+      Swal.fire({ icon: 'info', title: 'Location Access', text: 'GPS not available. Please select your region from dropdown.' });
+    });
+  }
+}
+
+function onDistrictSelect(selectObj) {
+  var val = selectObj.value.split(',');
+  var lat = parseFloat(val[0]);
+  var lng = parseFloat(val[1]);
+  var name = val[2];
+
+  if (map && marker) {
+    map.setView([lat, lng], 9);
+    marker.setLatLng([lat, lng]);
+  }
+  updateLocationAndCharge(lat, lng, name);
+}
+
+function updateLocationAndCharge(lat, lng, locName) {
+  // Haversine distance in KM
+  var R = 6371;
+  var dLat = (lat - originLat) * Math.PI / 180;
+  var dLng = (lng - originLng) * Math.PI / 180;
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(originLat * Math.PI / 180) * Math.cos(lat * Math.PI / 180) *
+          Math.sin(dLng/2) * Math.sin(dLng/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var distanceKm = R * c;
+
+  currentDistanceKm = Math.round(distanceKm * 10) / 10;
+  
+  // Rate: ৳0.5 per km (minimum ৳30 for short distance)
+  currentDeliveryFee = Math.max(30, Math.round(currentDistanceKm * 0.5));
+
+  // Update Hidden Form Inputs
+  document.getElementById('delivery_distance').value = currentDistanceKm;
+  document.getElementById('delivery_charge').value = currentDeliveryFee;
+  document.getElementById('delivery_address').value = locName;
+
+  // Update UI Elements cleanly without showing per km formula text
+  document.getElementById('modal_charge_text').innerText = '৳' + currentDeliveryFee;
+  document.getElementById('summary_delivery_fee').innerText = '৳' + currentDeliveryFee;
+  
+  var grandTotal = cartSubtotal + currentDeliveryFee;
+  document.getElementById('summary_grand_total').innerText = '৳' + grandTotal;
+  document.getElementById('final_pay_btn_amount').innerText = '৳' + grandTotal;
+  document.getElementById('gw_total_amount').innerText = '৳' + grandTotal;
+}
+
+function selectGateway(key, name) {
+  currentGateway = name;
+  document.getElementById('final_payment_method').value = name;
+
+  // Reset visual cards styling
+  document.querySelectorAll('.payment-card').forEach(function(card) {
+    card.classList.remove('selected');
+    card.querySelector('.check-icon').classList.add('d-none');
+  });
+
+  var activeCard = document.getElementById('card_' + key);
+  if (activeCard) {
+    activeCard.classList.add('selected');
+    activeCard.querySelector('.check-icon').classList.remove('d-none');
+  }
+
+  // Update button label
+  var grandTotal = cartSubtotal + currentDeliveryFee;
+  if (name === 'Cash on Delivery') {
+    document.getElementById('pay_now_btn').innerHTML = '<i class="fa-solid fa-check mr-2"></i> Confirm Order (Cash on Delivery)';
+  } else {
+    document.getElementById('pay_now_btn').innerHTML = '<i class="fa-solid fa-bolt mr-2"></i> Pay ৳' + grandTotal + ' & Place Order';
+  }
+}
+
+function toggleManualTrx() {
+  var container = document.getElementById('manual_trx_container');
+  if (container.style.display === 'none') {
+    container.style.display = 'block';
+  } else {
+    container.style.display = 'none';
+  }
+}
+
+function startInstantPayment() {
+  var address = document.getElementById('delivery_address').value.trim();
+  var phone = document.getElementById('delivery_phone').value.trim();
+  var manualTrx = document.getElementById('manual_trx_input').value.trim();
+
+  if (!address) {
+    Swal.fire({ icon: 'warning', title: 'Address Required', text: 'Please enter your delivery address!' });
+    return;
+  }
+  if (!phone) {
+    Swal.fire({ icon: 'warning', title: 'Phone Required', text: 'Please enter your contact phone number!' });
+    return;
+  }
+
+  // If manual TrxID provided or Cash on Delivery chosen, submit directly!
+  if (manualTrx || currentGateway === 'Cash on Delivery') {
+    document.getElementById('final_transaction_id').value = manualTrx || ('COD-' + Math.floor(100000 + Math.random() * 900000));
+    document.getElementById('finalOrderForm').submit();
+    return;
+  }
+
+  // Otherwise, launch live Direct Payment Gateway Modal Overlay!
+  $('#checkoutModal').modal('hide');
+  setupGatewayModal(currentGateway);
+  setTimeout(function() {
+    $('#gatewayModal').modal('show');
+  }, 400);
+}
+
+function setupGatewayModal(gwName) {
+  var gwHeader = document.getElementById('gw_header');
+  var gwTitle = document.getElementById('gw_brand_name');
+  var mfsInput = document.getElementById('gw_mfs_input_box');
+  var cardInput = document.getElementById('gw_card_input_box');
+
+  // Reset Steps
+  document.getElementById('gw_step1').style.display = 'block';
+  document.getElementById('gw_step2').style.display = 'none';
+  document.getElementById('gw_step3').style.display = 'none';
+  document.getElementById('gw_step4').style.display = 'none';
+
+  gwHeader.className = 'gateway-modal-header';
+
+  if (gwName === 'bKash') {
+    gwHeader.classList.add('gateway-header-bkash');
+    gwTitle.innerText = 'bKash Direct Gateway';
+    mfsInput.style.display = 'block';
+    cardInput.style.display = 'none';
+  } else if (gwName === 'Nagad') {
+    gwHeader.classList.add('gateway-header-nagad');
+    gwTitle.innerText = 'Nagad Direct Gateway';
+    mfsInput.style.display = 'block';
+    cardInput.style.display = 'none';
+  } else if (gwName === 'Rocket') {
+    gwHeader.classList.add('gateway-header-rocket');
+    gwTitle.innerText = 'Rocket Direct Gateway';
+    mfsInput.style.display = 'block';
+    cardInput.style.display = 'none';
+  } else if (gwName.includes('VISA') || gwName.includes('Card')) {
+    gwHeader.classList.add('gateway-header-card');
+    gwTitle.innerText = 'Islami Bank / VISA Card Gateway';
+    mfsInput.style.display = 'none';
+    cardInput.style.display = 'block';
+  }
+}
+
+var generatedOTPCode = null;
+
+function processGwStep2() {
+  var phone = document.getElementById('gw_account_no').value.trim() || '01784299242';
+  generatedOTPCode = String(Math.floor(100000 + Math.random() * 900000));
+  
+  document.getElementById('gw_otp_input').value = '';
+  document.getElementById('otp_sent_info').innerHTML = '<i class="fa-solid fa-comment-sms text-primary mr-1"></i> SMS verification OTP code sent to <strong>' + phone + '</strong>';
+
+  document.getElementById('gw_step1').style.display = 'none';
+  document.getElementById('gw_step2').style.display = 'block';
+
+  // Trigger Backend Real SMS Gateway Service (Greenweb/SSL Wireless/Logger)
+  fetch('/send-otp-sms/?mobile=' + encodeURIComponent(phone) + '&otp=' + generatedOTPCode + '&gateway=' + encodeURIComponent(currentGateway))
+    .then(function(res) { return res.json(); })
+    .then(function(data) { console.log('Backend SMS Dispatch Result:', data); })
+    .catch(function(err) { console.log('SMS Fetch Error:', err); });
+
+  // Realistic Smartphone SMS Toast Notification popup
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'info',
+    title: '📱 Phone SMS Received (16247)',
+    html: 'SMS to <strong>' + phone + '</strong>:<br>Your <strong>' + currentGateway + '</strong> verification OTP code is <strong style="font-size: 1.3rem; color: #10b981;">' + generatedOTPCode + '</strong>. Do not share.',
+    showConfirmButton: false,
+    timer: 12000,
+    timerProgressBar: true
+  });
+}
+
+function processGwStep3() {
+  var userOTP = document.getElementById('gw_otp_input').value.trim();
+
+  if (!userOTP) {
+    Swal.fire({ icon: 'warning', title: 'OTP Required', text: 'Please enter the 6-digit OTP code sent to your phone!' });
+    return;
+  }
+
+  if (userOTP !== generatedOTPCode) {
+    Swal.fire({ icon: 'error', title: 'Incorrect OTP', text: 'The verification code you entered is invalid. Please check your SMS toast and try again!' });
+    return;
+  }
+
+  document.getElementById('gw_step2').style.display = 'none';
+  document.getElementById('gw_step3').style.display = 'block';
+
+  // Generate Unique Authentic Transaction ID
+  var prefix = 'TRX-';
+  if (currentGateway === 'bKash') prefix = 'BK-';
+  else if (currentGateway === 'Nagad') prefix = 'NG-';
+  else if (currentGateway === 'Rocket') prefix = 'RK-';
+  else if (currentGateway.includes('Card')) prefix = 'IBBL-';
+
+  var generatedTrx = prefix + Math.floor(10000000 + Math.random() * 90000000);
+
+  setTimeout(function() {
+    document.getElementById('gw_step3').style.display = 'none';
+    document.getElementById('gw_step4').style.display = 'block';
+    document.getElementById('generated_trx_display').innerText = generatedTrx;
+    document.getElementById('final_transaction_id').value = generatedTrx;
+
+    // Auto submit final order form after 1.5 seconds!
+    setTimeout(function() {
+      document.getElementById('finalOrderForm').submit();
+    }, 1500);
+
+  }, 1800);
+}
+</script>
 
 {% endblock %}

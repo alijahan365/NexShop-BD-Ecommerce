@@ -35,5 +35,6 @@ class Login(View):
         return render (request, 'login.html', {'error': error_message})
 
 def logout(request):
-    request.session.clear()
+    if 'customer' in request.session:
+        request.session.pop('customer')
     return redirect('login')
