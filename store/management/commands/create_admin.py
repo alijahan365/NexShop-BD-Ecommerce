@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = 'Automatically creates an admin superuser if it does not exist'
 
     def handle(self, *args, **options):
-        username = os.environ.get('ADMIN_USERNAME', 'admin').strip()
+        username = os.environ.get('ADMIN_USERNAME', None).strip()
         email = os.environ.get('ADMIN_EMAIL', 'jahan242-15-846@diu.edu.bd').strip()
         password = os.environ.get('ADMIN_PASSWORD', None).strip()
 
