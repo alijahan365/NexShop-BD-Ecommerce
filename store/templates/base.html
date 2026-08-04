@@ -317,6 +317,66 @@
       margin-bottom: 8px;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
+
+    /* Mobile Bottom Navigation Bar */
+    .mobile-bottom-nav {
+      background: #0f172a;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 0;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.25);
+      z-index: 1040;
+    }
+
+    .mobile-nav-item {
+      color: #94a3b8;
+      text-decoration: none !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      flex: 1;
+    }
+
+    .mobile-nav-item i {
+      font-size: 1.15rem;
+      margin-bottom: 2px;
+    }
+
+    .mobile-nav-item:hover, .mobile-nav-item.active {
+      color: #10b981;
+    }
+
+    .mobile-cart-badge {
+      position: absolute;
+      top: -3px;
+      right: 20%;
+      background: #10b981;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 800;
+      border-radius: 10px;
+      padding: 1px 6px;
+    }
+
+    @media (max-width: 991px) {
+      body {
+        padding-bottom: 65px;
+      }
+      .floating-whatsapp {
+        bottom: 75px !important;
+        right: 15px !important;
+        padding: 10px 16px !important;
+        font-size: 0.85rem !important;
+      }
+      .chat-box-modal {
+        bottom: 130px !important;
+        right: 15px !important;
+        width: 90% !important;
+        max-width: 340px !important;
+      }
+    }
   </style>
 </head>
 
@@ -562,6 +622,29 @@
     }, 500);
   }
   </script>
+
+  <!-- MOBILE STICKY BOTTOM NAV BAR (APP-STYLE E-COMMERCE BOTTOM NAV) -->
+  <div class="mobile-bottom-nav d-flex d-lg-none justify-content-around align-items-center fixed-bottom">
+    <a href="/" class="mobile-nav-item {% if request.path == '/' and not request.GET.category %}active{% endif %}">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="/#catalog_section" class="mobile-nav-item {% if request.GET.category %}active{% endif %}">
+      <i class="fa-solid fa-layer-group"></i>
+      <span>Categories</span>
+    </a>
+    <a href="/cart" class="mobile-nav-item position-relative {% if request.path == '/cart' %}active{% endif %}">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>Cart</span>
+      {% if request.session.cart %}
+      <span class="mobile-cart-badge">{{request.session.cart|length}}</span>
+      {% endif %}
+    </a>
+    <a href="/orders" class="mobile-nav-item {% if request.path == '/orders' %}active{% endif %}">
+      <i class="fa-solid fa-box"></i>
+      <span>Orders</span>
+    </a>
+  </div>
 
   <!-- JS Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>

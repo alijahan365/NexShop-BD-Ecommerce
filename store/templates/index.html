@@ -194,6 +194,68 @@
     padding: 24px;
     color: white;
   }
+
+  /* Mobile Horizontal Category Bar */
+  .mobile-category-bar {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 6px 2px 14px 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+  }
+  .mobile-category-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .mobile-cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 25px;
+    color: #334155;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+  }
+  .mobile-cat-pill:hover, .mobile-cat-pill.active {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+
+  @media (max-width: 767px) {
+    .product-image {
+      height: 140px !important;
+    }
+    .product-name {
+      font-size: 0.82rem !important;
+      min-height: 2.2rem !important;
+    }
+    .nex-product-card {
+      padding: 10px !important;
+      border-radius: 12px !important;
+    }
+    .hero-banner-card {
+      margin-bottom: 15px !important;
+    }
+    .hero-banner-card .display-4 {
+      font-size: 1.5rem !important;
+    }
+    .hero-banner-card .lead {
+      font-size: 0.88rem !important;
+    }
+    .hero-banner-card div[style*="min-height: 320px"] {
+      min-height: 200px !important;
+      padding: 1.5rem !important;
+    }
+  }
 </style>
 
 <div class="container-fluid px-lg-5">
@@ -234,6 +296,35 @@
 
     <!-- RIGHT COLUMN: Hero Banner + Products directly below -->
     <div class="col-lg-9">
+
+      <!-- MOBILE CATEGORIES TOP HORIZONTAL SCROLL BAR (EXCLUSIVELY FOR PHONES) -->
+      <div class="d-block d-lg-none mb-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h6 class="font-weight-bold text-dark m-0"><i class="fa-solid fa-list-ul text-success mr-2"></i> Select Category</h6>
+          <button class="btn btn-sm btn-outline-success font-weight-bold py-1 px-3" data-toggle="modal" data-target="#mobileCategoryModal">
+            <i class="fa-solid fa-border-all mr-1"></i> All Categories &rarr;
+          </button>
+        </div>
+        <div class="mobile-category-bar">
+          <a href="/" class="mobile-cat-pill {% if not request.GET.category %}active{% endif %}">
+            <i class="fa-solid fa-layer-group text-success"></i> All Products
+          </a>
+          {% for category in categories %}
+          <a href="/?category={{category.id}}" class="mobile-cat-pill {% if request.GET.category == category.id|stringformat:'i' %}active{% endif %}">
+            {% if 'Electronics' in category.name %}<i class="fa-solid fa-laptop text-primary"></i>
+            {% elif 'Men' in category.name %}<i class="fa-solid fa-shirt text-success"></i>
+            {% elif 'Women' in category.name %}<i class="fa-solid fa-vest-patches text-danger"></i>
+            {% elif 'Watch' in category.name %}<i class="fa-solid fa-clock text-warning"></i>
+            {% elif 'Shoe' in category.name %}<i class="fa-solid fa-shoe-prints text-info"></i>
+            {% elif 'Home' in category.name %}<i class="fa-solid fa-house-laptop text-secondary"></i>
+            {% elif 'Health' in category.name %}<i class="fa-solid fa-spa text-danger"></i>
+            {% else %}<i class="fa-solid fa-tag text-dark"></i>
+            {% endif %}
+            {{category.name}}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
       
       <!-- 1. Hero Carousel Slider -->
       <div id="nexHeroCarousel" class="carousel slide hero-banner-card" data-ride="carousel" data-interval="4000">
@@ -546,5 +637,44 @@ function selectSize(btn) {
   btn.classList.add('active');
 }
 </script>
+
+<!-- MOBILE ALL CATEGORIES MODAL (FULL SCREEN DRAWER FOR MOBILE USERS) -->
+<div class="modal fade" id="mobileCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+      <div class="modal-header text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+        <h5 class="modal-title font-weight-bold"><i class="fa-solid fa-list-ul text-success mr-2"></i> All Product Categories</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0" style="max-height: 70vh; overflow-y: auto;">
+        <div class="list-group list-group-flush">
+          <a href="/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 {% if not request.GET.category %}active bg-success text-white{% endif %}">
+            <span><i class="fa-solid fa-layer-group mr-2 text-success"></i> All Products</span>
+            <i class="fa-solid fa-chevron-right small text-muted"></i>
+          </a>
+          {% for category in categories %}
+          <a href="/?category={{category.id}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 {% if request.GET.category == category.id|stringformat:'i' %}active bg-success text-white{% endif %}">
+            <span>
+              {% if 'Electronics' in category.name %}<i class="fa-solid fa-laptop mr-2 text-primary"></i>
+              {% elif 'Men' in category.name %}<i class="fa-solid fa-shirt mr-2 text-success"></i>
+              {% elif 'Women' in category.name %}<i class="fa-solid fa-vest-patches mr-2 text-danger"></i>
+              {% elif 'Watch' in category.name %}<i class="fa-solid fa-clock mr-2 text-warning"></i>
+              {% elif 'Shoe' in category.name %}<i class="fa-solid fa-shoe-prints mr-2 text-info"></i>
+              {% elif 'Home' in category.name %}<i class="fa-solid fa-house-laptop mr-2 text-secondary"></i>
+              {% elif 'Health' in category.name %}<i class="fa-solid fa-spa mr-2 text-danger"></i>
+              {% else %}<i class="fa-solid fa-tag mr-2 text-dark"></i>
+              {% endif %}
+              {{category.name}}
+            </span>
+            <i class="fa-solid fa-chevron-right small text-muted"></i>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
