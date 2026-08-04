@@ -81,26 +81,39 @@ WSGI_APPLICATION = 'Eshop.wsgi.application'
 # Database Configuration (Supports MySQL, DATABASE_URL, and SQLite)
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-DB_ENGINE = os.environ.get('DB_ENGINE', '').lower()
+DATABASE_URL = os.environ.get('DATABASE_URL', '').strip()
+DB_ENGINE = os.environ.get('DB_ENGINE', '').strip().lower()
 
 if DATABASE_URL:
-    import urllib.parse
-    url = urllib.parse.urlparse(DATABASE_URL)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': urllib.parse.unquote(url.password or ''),
-            'HOST': url.hostname,
-            'PORT': str(url.port or 3306),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                'charset': 'utf8mb4',
-            },
+    try:
+        import dj_database_url
+        db_config = dj_database_url.config(
+            default=DATABASE_URL,
+            engine='django.db.backends.mysql',
+            conn_max_age=600
+        )
+        db_config['OPTIONS'] = {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
         }
-    }
+        DATABASES = {'default': db_config}
+    except Exception:
+        import urllib.parse
+        url = urllib.parse.urlparse(DATABASE_URL)
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': url.path.lstrip('/'),
+                'USER': url.username,
+                'PASSWORD': urllib.parse.unquote(url.password or ''),
+                'HOST': url.hostname,
+                'PORT': str(url.port or 3306),
+                'OPTIONS': {
+                    'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                    'charset': 'utf8mb4',
+                },
+            }
+        }
 elif DB_ENGINE == 'sqlite':
     DATABASES = {
         'default': {
@@ -112,11 +125,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME', 'eshop_db'),
-            'USER': os.environ.get('DB_USER', 'root'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '3306'),
+            'NAME': os.environ.get('DB_NAME', 'eshop_db').strip(),
+            'USER': os.environ.get('DB_USER', 'root').strip(),
+            'PASSWORD': os.environ.get('DB_PASSWORD', '').strip(),
+            'HOST': os.environ.get('DB_HOST', 'localhost').strip(),
+            'PORT': os.environ.get('DB_PORT', '3306').strip(),
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                 'charset': 'utf8mb4',
