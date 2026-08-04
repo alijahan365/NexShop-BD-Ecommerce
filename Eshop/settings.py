@@ -78,12 +78,30 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Eshop.wsgi.application'
 
 
-# Database Configuration (Supports MySQL and SQLite)
+# Database Configuration (Supports MySQL, DATABASE_URL, and SQLite)
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DB_ENGINE = os.environ.get('DB_ENGINE', 'mysql').lower()
+DATABASE_URL = os.environ.get('DATABASE_URL')
+DB_ENGINE = os.environ.get('DB_ENGINE', '').lower()
 
-if DB_ENGINE == 'sqlite':
+if DATABASE_URL:
+    import urllib.parse
+    url = urllib.parse.urlparse(DATABASE_URL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': urllib.parse.unquote(url.password or ''),
+            'HOST': url.hostname,
+            'PORT': str(url.port or 3306),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            },
+        }
+    }
+elif DB_ENGINE == 'sqlite':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
