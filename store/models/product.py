@@ -11,22 +11,23 @@ class Products(models.Model):
 
     @staticmethod
     def get_products_by_id(ids):
-        return Products.objects.filter (id__in=ids)
+        return Products.objects.select_related('category').filter(id__in=ids)
+
     @staticmethod
     def get_all_products():
-        return Products.objects.all()
+        return Products.objects.select_related('category').all()
 
     @staticmethod
     def get_all_products_by_categoryid(category_id):
         if category_id:
-            return Products.objects.filter (category=category_id)
+            return Products.objects.select_related('category').filter(category=category_id)
         else:
             return Products.get_all_products()
 
     @staticmethod
     def search_products(query):
         if query:
-            return Products.objects.filter(
+            return Products.objects.select_related('category').filter(
                 Q(name__icontains=query) | 
                 Q(description__icontains=query) | 
                 Q(category__name__icontains=query)

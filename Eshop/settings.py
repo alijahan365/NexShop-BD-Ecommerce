@@ -107,6 +107,7 @@ if DATABASE_URL:
                 'PASSWORD': urllib.parse.unquote(url.password or ''),
                 'HOST': url.hostname,
                 'PORT': str(url.port or 3306),
+                'CONN_MAX_AGE': 600,
                 'OPTIONS': {
                     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                     'charset': 'utf8mb4',
@@ -122,6 +123,7 @@ else:
             'PASSWORD': os.environ.get('DB_PASSWORD', '').strip(),
             'HOST': os.environ.get('DB_HOST', 'localhost').strip(),
             'PORT': os.environ.get('DB_PORT', '3306').strip(),
+            'CONN_MAX_AGE': 600,
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                 'charset': 'utf8mb4',
