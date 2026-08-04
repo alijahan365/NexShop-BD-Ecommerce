@@ -171,8 +171,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_MAX_AGE = 31536000
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
+
+# In-Memory Fast Caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'nexshop-cache',
+    }
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 

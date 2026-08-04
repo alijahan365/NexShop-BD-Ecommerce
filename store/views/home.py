@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from store.models.product import Products
 from store.models.category import Category
 from django.views import View
+from django.core.cache import cache
 
 
 class Index(View):
@@ -46,7 +47,11 @@ def store(request):
     if not cart:
         request.session['cart'] = {}
     
-    categories = Category.get_all_categories()
+    categories = cache.get('all_categories_list')
+    if categories is None:
+        categories = list(Category.get_all_categories())
+        cache.set('all_categories_list', categories, 3600)
+
     categoryID = request.GET.get('category')
     query = request.GET.get('query')
 

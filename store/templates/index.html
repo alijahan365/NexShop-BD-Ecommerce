@@ -416,7 +416,7 @@
             <div class="nex-product-card p-3 w-100">
               <div onclick="openProductModal('{{product.id}}', '{{product.name|escapejs}}', '{{product.price}}', '{{product.category.name|escapejs}}', '{{product.image.url}}', '{{product.description|escapejs}}')">
                 <div class="img-box rounded mb-2">
-                  <img class="product-image rounded" src="{{product.image.url}}" alt="{{product.name}}">
+                  <img class="product-image rounded" src="{{product.image.url}}" alt="{{product.name}}" loading="lazy">
                 </div>
                 <span class="badge badge-light border text-muted px-2 py-1 mb-2 small">{{product.category.name}}</span>
                 <h6 class="product-name">{{product.name}}</h6>
